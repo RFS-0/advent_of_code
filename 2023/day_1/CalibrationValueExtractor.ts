@@ -1,5 +1,4 @@
-import { isDigit } from "../../lib/strings.ts";
-import { iterateString, iterateStringReverse } from "../../lib/arrays.ts";
+import { isDigit, iterateString, iterateStringReverse } from "@strings";
 
 export const convertWithRulesForPart1: (input: string) => number = (
   calibrationValueAsString: string,

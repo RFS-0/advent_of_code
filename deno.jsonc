@@ -1,6 +1,7 @@
 {
   "imports": {
-    "@input": "./lib/input.ts"
-    //"@std/testing": "jsr:@std/testing@^1.0.5"
+    "@input": "./lib/input.ts",
+    "@strings": "./lib/strings.ts",
+    "@arrays": "./lib/arrays.ts"
   }
 }
