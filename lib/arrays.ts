@@ -1,7 +1,7 @@
 export function iterate<T>(
   collection: T[],
-  predicate: (value: T, index: number) => boolean,
-  onMatch: (value: T, index: number) => void,
+  predicate: (item: T, index: number) => boolean,
+  onMatch: (item: T, index: number) => void,
   breakOnMatch: boolean = false,
 ): void {
   for (let i = 0; i < collection.length; i++) {
