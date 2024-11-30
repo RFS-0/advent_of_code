@@ -80,7 +80,7 @@ describe("The string utilities", () => {
       ]);
     });
 
-    test("should identify first matche if we break on match", () => {
+    test("should identify first match if we break on match", () => {
       // given
       const someString = "abca";
       const accumulator: IterationMatch[] = [];
@@ -150,7 +150,7 @@ describe("The string utilities", () => {
       ]);
     });
 
-    test("should identify first matche if we break on match", () => {
+    test("should identify first match if we break on match", () => {
       // given
       const someString = "abca";
       const accumulator: IterationMatch[] = [];
