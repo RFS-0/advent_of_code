@@ -1,10 +1,12 @@
 import { describe, test } from "jsr:@std/testing/bdd";
 import { assertEquals } from "jsr:@std/assert";
-import { isDigit } from "./strings.ts";
+import { isDigit } from "@strings";
 
 describe("The string utilities", () => {
   describe("when checking for digits for all ASCII chars", () => {
-    const DIGIT_ASCII_CODES = Array.from({ length: 10 }, (_, i) => 48 + i); // 48-57
+    // Digit codes are: 48-57
+    const DIGIT_ASCII_CODES = Array.from({ length: 10 }, (_, i) => 48 + i);
+    // Non-digit codes are all other codes
     const NON_DIGIT_ASCII_CODES = Array.from({ length: 128 }, (_, i) => i)
       .filter(
         (code) => !DIGIT_ASCII_CODES.includes(code),
@@ -26,10 +28,6 @@ describe("The string utilities", () => {
       // given: all ASCII codes for non-digits
       for (const charCode of NON_DIGIT_ASCII_CODES) {
         const char = String.fromCharCode(charCode);
-
-        if (charCode >= 48 && charCode <= 57) {
-          continue; // Skip digits
-        }
 
         // when
         const result = isDigit(char);
