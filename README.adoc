@@ -1,0 +1,47 @@
+= Advent of Code 2024
+
+Solutions to tasks of advent of code 2024 using deno
+
+== Setup
+
+Install https://deno.com/[Deno].
+
+On Mac/Linux:
+
+    curl -fsSL https://deno.land/install.sh | sh
+
+On Windows:
+
+    irm https://deno.land/install.ps1 | iex
+
+== Project Structure
+
+The project is structured as follows:
+
+    advent_of_code_2024/
+    ├── year1
+        ├── day_1
+            └── part_1
+                └── year1_day_1_part_1.test.ts
+                └── year1_day_1_part_1.ts
+            ...
+        ...
+    ├── year2
+    ...
+
+== Execute Solution
+
+Run the solution to some task by executing:
+
+    export ADVENT_SESSION_COOKIE=<session_cookie>
+    deno run --allow-net --allow-env year1/day_1/part_1/year1_day_1_part_1.test.ts
+
+Instead of exporting the session cookie to the env vars you can also just specify it via cli:
+
+    deno run --allow-net year1/day_1/part_1/year1_day_1_part_1.test.ts <session_cookie>
+
+== Debug Solution
+
+You can debug the solution to some task with:
+
+    deno run --inspect-wait --allow-net year1/day_1/part_1/year1_day_1_part_1.test.ts <session_cookie>
