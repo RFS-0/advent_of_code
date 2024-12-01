@@ -17,6 +17,17 @@ export type Game = {
   setsOfCubes: SetOfCubes[];
 };
 
+export type FewestNumberOfCubesPerColor = {
+  minBlueCubeCount: number;
+  minRedCubeCount: number;
+  minGreenCubeCount: number;
+};
+
+export type GameIdToFewestCubesPerColor = {
+  id: string;
+  fewestNumberOfCubesPerColor: FewestNumberOfCubesPerColor;
+};
+
 export type GameConstraints = {
   maxRedCubeCount: number;
   maxGreenCubeCount: number;
@@ -105,4 +116,35 @@ export const filterPossibleGames = (
     }
   }
   return possibleGames;
+};
+
+export const mapToFewestNumberOfCubesPerColor = (
+  games: Game[],
+) => {
+  const gameIdToFewestCubesPerColor: GameIdToFewestCubesPerColor[] = [];
+  for (const game of games) {
+    let minBlueCubeCount = 0;
+    let minGreenCubeCount = 0;
+    let minRedCubeCount = 0;
+    for (const setsOfCubes of game.setsOfCubes) {
+      if (setsOfCubes.blueCubeCount > minBlueCubeCount) {
+        minBlueCubeCount = setsOfCubes.blueCubeCount;
+      }
+      if (setsOfCubes.greenCubeCount > minGreenCubeCount) {
+        minGreenCubeCount = setsOfCubes.greenCubeCount;
+      }
+      if (setsOfCubes.redCubeCount > minRedCubeCount) {
+        minRedCubeCount = setsOfCubes.redCubeCount;
+      }
+    }
+    gameIdToFewestCubesPerColor.push({
+      id: game.id,
+      fewestNumberOfCubesPerColor: {
+        minBlueCubeCount,
+        minGreenCubeCount,
+        minRedCubeCount,
+      },
+    });
+  }
+  return gameIdToFewestCubesPerColor;
 };
