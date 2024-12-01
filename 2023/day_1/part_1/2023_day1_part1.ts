@@ -2,8 +2,8 @@
 
 // execute from root with: deno run --allow-net 2023/day_1/part_1/2023_day1_part1.ts <session_cookie>
 
-import { downloadInput, InputParser, readSessionToken } from '@input';
-import { convertWithRulesForPart1 } from '../CalibrationValueExtractor.ts';
+import { downloadInput, InputParser, readSessionToken } from "@input";
+import { convertWithRulesForPart1 } from "../calibration-values.ts";
 
 const sessionCookie = readSessionToken();
 const input = await downloadInput(

@@ -2,7 +2,7 @@ import { describe, test } from "jsr:@std/testing/bdd";
 import { InputParser } from "@input";
 
 import { assertEquals } from "jsr:@std/assert";
-import { convertWithRulesForPart1 } from "../CalibrationValueExtractor.ts";
+import { convertWithRulesForPart1 } from "../calibration-values.ts";
 
 describe("Advent of Code 2023, Day 1, Part 1", () => {
   test("should be able to solve example", () => {

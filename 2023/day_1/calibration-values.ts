@@ -4,7 +4,7 @@ export const convertWithRulesForPart1: (input: string) => number = (
   calibrationValueAsString: string,
 ): number => {
   const extractedValues: IntermediateResult[] = [];
-  let firstPart = mapString<IntermediateResult, IntermediateResult>(
+  const firstPart = mapString<IntermediateResult, IntermediateResult>(
     () => new IntermediateResult(),
     calibrationValueAsString,
     isDigit,
@@ -12,7 +12,7 @@ export const convertWithRulesForPart1: (input: string) => number = (
     () => true,
   );
   extractedValues.push(firstPart);
-  let secondPart = mapStringReverse<IntermediateResult, IntermediateResult>(
+  const secondPart = mapStringReverse<IntermediateResult, IntermediateResult>(
     () => new IntermediateResult(),
     calibrationValueAsString,
     isDigit,
@@ -61,10 +61,6 @@ class IntermediateResult {
     this.convertToDigitIfPossible();
   }
 
-  public resetCharDigitParts(): void {
-    this.charDigitParts = "";
-  }
-
   public isComplete(): boolean {
     return this.digit !== null;
   }
@@ -75,7 +71,7 @@ class IntermediateResult {
 
   private convertToDigitIfPossible(): void {
     let digitKey = "";
-    for (let key of IntermediateResult.stringToNumber.keys()) {
+    for (const key of IntermediateResult.stringToNumber.keys()) {
       if (this.charDigitParts.includes(key)) {
         digitKey = key;
       }
@@ -90,10 +86,6 @@ class IntermediateResult {
     }
   }
 }
-
-type CalibrationValueResult = {
-  value: number;
-};
 
 export const convertWithRulesForPart2: (
   calibrationValueAsString: string,

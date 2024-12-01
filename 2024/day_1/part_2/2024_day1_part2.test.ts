@@ -1,9 +1,14 @@
-import { describe, test } from 'jsr:@std/testing/bdd';
-import { InputParser } from '@input';
+import { describe, test } from "jsr:@std/testing/bdd";
+import { InputParser } from "@input";
 
-import { assertEquals } from 'jsr:@std/assert';
-import { calculateSimilarityScore, extractLocationIds, sort, UnsortedLocationIdLists } from '../location-id-utils.ts';
-import { mapItems } from '@arrays';
+import { assertEquals } from "jsr:@std/assert";
+import {
+  calculateSimilarityScore,
+  extractLocationIds,
+  sort,
+  UnsortedLocationIdLists,
+} from "../location-id-utils.ts";
+import { mapItems } from "@arrays";
 
 describe("Advent of Code 2024, Day 1, Part 1", () => {
   test("should be able to solve example", () => {

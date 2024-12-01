@@ -8,15 +8,15 @@ import { uploadSolution } from "@output";
 
 const sessionCookie = readSessionToken();
 const input = await downloadInput(
-    "https://adventofcode.com/2024/day/2/input",
-    sessionCookie,
+  "https://adventofcode.com/2024/day/2/input",
+  sessionCookie,
 );
 
 const parsed = new InputParser(input)
-    .printInput()
-    .parseLines(parse)
-    .printParsed()
-    .getParsed();
+  .printInput()
+  .parseLines(parse)
+  .printParsed()
+  .getParsed();
 
 // process parsed
 
@@ -27,8 +27,8 @@ const result = "tbd";
 console.log("Submitting the result: ", result);
 
 await uploadSolution(
-    "https://adventofcode.com/2024/day/2/answer",
-    "2",
-    result,
-    sessionCookie,
+  "https://adventofcode.com/2024/day/2/answer",
+  "2",
+  result,
+  sessionCookie,
 );

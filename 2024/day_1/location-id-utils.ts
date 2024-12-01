@@ -98,7 +98,7 @@ export const calculateSimilarityScore: (
     leftList.map((locationId) => parseInt(locationId.value)),
   );
   const locationIdToOccurrences: Map<number, number> = new Map();
-  for (let distinctLocationId of distinctLocationIds) {
+  for (const distinctLocationId of distinctLocationIds) {
     locationIdToOccurrences.set(distinctLocationId, 0);
   }
 

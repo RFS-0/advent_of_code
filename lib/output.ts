@@ -1,19 +1,16 @@
-const createFormData: (level: string, answer: string) => URLSearchParams = (
-  level,
-  answer,
-) => {
+const createFormData = (level: string, answer: string) => {
   const formData = new URLSearchParams();
   formData.append("level", level);
   formData.append("answer", answer);
   return formData;
 };
 
-export const uploadSolution: (
+export const uploadSolution = async (
   url: string,
   level: string,
   answer: string,
   sessionCookie: string,
-) => Promise<void> = async (url, level, answer, sessionCookie) => {
+) => {
   const formData = createFormData(level, answer);
 
   try {

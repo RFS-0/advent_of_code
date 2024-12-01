@@ -2,9 +2,12 @@
 
 // execute from root with: deno run --allow-net 2023/day_2/part_2/2023_day2_part2.ts <session_cookie>
 
-import { downloadInput, InputParser, readSessionToken } from '@input';
-import { uploadSolution } from '@output';
-import { mapToFewestNumberOfCubesPerColor, parseGames } from '../cube-conondrum.ts';
+import { downloadInput, InputParser, readSessionToken } from "@input";
+import { uploadSolution } from "@output";
+import {
+  mapToFewestNumberOfCubesPerColor,
+  parseGames,
+} from "../cube-conondrum.ts";
 
 const sessionCookie = readSessionToken();
 const input = await downloadInput(

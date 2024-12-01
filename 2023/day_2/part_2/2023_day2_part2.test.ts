@@ -1,8 +1,11 @@
-import { describe, test } from 'jsr:@std/testing/bdd';
-import { InputParser } from '@input';
+import { describe, test } from "jsr:@std/testing/bdd";
+import { InputParser } from "@input";
 
-import { assertEquals } from 'jsr:@std/assert';
-import { mapToFewestNumberOfCubesPerColor, parseGames } from '../cube-conondrum.ts';
+import { assertEquals } from "jsr:@std/assert";
+import {
+  mapToFewestNumberOfCubesPerColor,
+  parseGames,
+} from "../cube-conondrum.ts";
 
 describe("Advent of Code 2023, Day 2, Part 2", () => {
   test("should be able to solve example", () => {

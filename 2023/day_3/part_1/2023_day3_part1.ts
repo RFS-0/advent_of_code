@@ -23,7 +23,7 @@ const engineParts = extractEngineParts(parsed);
 const sumOfEngineParts = engineParts.map((part) => part.value)
   .reduce((sum, part) => sum + part, 0);
 
-console.log(`Submitting the result: ${sumOfEngineParts}`)
+console.log(`Submitting the result: ${sumOfEngineParts}`);
 
 await uploadSolution(
   "https://adventofcode.com/2023/day/3/answer",
