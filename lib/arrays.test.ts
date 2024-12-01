@@ -1,6 +1,6 @@
 import { describe, test } from "jsr:@std/testing/bdd";
 import { assertEquals } from "jsr:@std/assert";
-import { iterate, iterateReverse } from "@arrays";
+import { mapItems, mapItemsReverse } from "@arrays";
 
 describe("The array utilities", () => {
   type Item = {
@@ -11,10 +11,15 @@ describe("The array utilities", () => {
     originalValue: Item;
     mappedValue: string;
   };
+  type IterationMiss = {
+    index: number;
+    originalValue: Item;
+    mappedValue: string;
+  };
   describe("when iterating over an array", () => {
     test("should identify matches by default", () => {
       // given
-      const values: Item[] = [
+      const items: Item[] = [
         {
           value: 1,
         },
@@ -25,16 +30,16 @@ describe("The array utilities", () => {
           value: 3,
         },
       ];
-      const accumulator: IterationMatch[] = [];
 
       // when
-      iterate(
-        values,
+      const accumulator = mapItems(
+        () => ([] as IterationMatch[]),
+        items,
         (item) => item.value === 1 || item.value === 3,
-        (match, i) => (accumulator.push({
+        (acc, item, i) => (acc.push({
           index: i,
-          originalValue: match,
-          mappedValue: match.value + "-mapped",
+          originalValue: item,
+          mappedValue: item.value + "-mapped",
         } as IterationMatch)),
       );
 
@@ -59,7 +64,7 @@ describe("The array utilities", () => {
 
     test("should identify first match if we break on match", () => {
       // given
-      const values: Item[] = [
+      const items: Item[] = [
         {
           value: 1,
         },
@@ -70,18 +75,18 @@ describe("The array utilities", () => {
           value: 3,
         },
       ];
-      const accumulator: IterationMatch[] = [];
 
       // when
-      iterate(
-        values,
+      const accumulator = mapItems(
+        () => ([] as IterationMatch[]),
+        items,
         (item) => item.value === 1 || item.value === 3,
-        (match, i) => (accumulator.push({
+        (acc, item, i) => (acc.push({
           index: i,
-          originalValue: match,
-          mappedValue: match.value + "-mapped",
+          originalValue: item,
+          mappedValue: item.value + "-mapped",
         } as IterationMatch)),
-        true,
+        () => true,
       );
 
       // then
@@ -97,10 +102,10 @@ describe("The array utilities", () => {
     });
   });
 
-  describe("when iterating reverse over a string", () => {
+  describe("when iterating reverse over an array", () => {
     test("should identify matches by default", () => {
       // given
-      const values: Item[] = [
+      const items: Item[] = [
         {
           value: 1,
         },
@@ -111,16 +116,16 @@ describe("The array utilities", () => {
           value: 3,
         },
       ];
-      const accumulator: IterationMatch[] = [];
 
       // when
-      iterateReverse(
-        values,
+      const accumulator = mapItemsReverse(
+        () => ([] as IterationMiss[]),
+        items,
         (item) => item.value === 1 || item.value === 3,
-        (match, i) => (accumulator.push({
+        (acc, item, i) => (acc.push({
           index: i,
-          originalValue: match,
-          mappedValue: match.value + "-mapped",
+          originalValue: item,
+          mappedValue: item.value + "-mapped",
         } as IterationMatch)),
       );
 
@@ -143,9 +148,9 @@ describe("The array utilities", () => {
       ]);
     });
 
-    test("should identify first match if we break on match", () => {
+    test("should identify first miss if we break on miss", () => {
       // given
-      const values: Item[] = [
+      const items: Item[] = [
         {
           value: 1,
         },
@@ -156,33 +161,29 @@ describe("The array utilities", () => {
           value: 3,
         },
       ];
-      const accumulator: IterationMatch[] = [];
 
       // when
-      iterateReverse(
-        values,
+      const accumulator = mapItemsReverse(
+        () => ([] as IterationMiss[]),
+        items,
         (item) => item.value === 1 || item.value === 3,
-        (match, i) => (accumulator.push({
+        () => {},
+        () => false,
+        (acc, item, i) => (acc.push({
           index: i,
-          originalValue: match,
-          mappedValue: match.value + "-mapped",
-        } as IterationMatch)),
+          originalValue: item,
+          mappedValue: item.value + "-mapped",
+        } as IterationMiss)),
+        () => true,
       );
 
       // then
       assertEquals(accumulator, [
         {
-          index: 2,
-          mappedValue: "3-mapped",
+          index: 1,
+          mappedValue: "2-mapped",
           originalValue: {
-            value: 3,
-          },
-        },
-        {
-          index: 0,
-          mappedValue: "1-mapped",
-          originalValue: {
-            value: 1,
+            value: 2,
           },
         },
       ]);
