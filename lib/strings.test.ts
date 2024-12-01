@@ -1,6 +1,6 @@
 import { describe, test } from "jsr:@std/testing/bdd";
 import { assertEquals } from "jsr:@std/assert";
-import { isDigit, iterateString, iterateStringReverse } from "@strings";
+import { isDigit, mapString, mapStringReverse } from "@strings";
 
 describe("The string utilities", () => {
   describe("when checking for digits for all ASCII chars", () => {
@@ -47,16 +47,16 @@ describe("The string utilities", () => {
     test("should identify matches by default", () => {
       // given
       const someString = "abca";
-      const accumulator: IterationMatch[] = [];
 
       // when
-      iterateString(
+      const accumulator = mapString(
+        () => ([] as IterationMatch[]),
         someString,
         (value) => value === "a" || value === "c",
-        (match, i) => (accumulator.push({
+        (acc, char, i) => (acc.push({
           index: i,
-          originalValue: match,
-          mappedValue: match + "-mapped",
+          originalValue: char,
+          mappedValue: char + "-mapped",
         } as IterationMatch)),
       );
 
@@ -83,18 +83,17 @@ describe("The string utilities", () => {
     test("should identify first match if we break on match", () => {
       // given
       const someString = "abca";
-      const accumulator: IterationMatch[] = [];
 
       // when
-      iterateString(
+      const accumulator = mapString(
+        () => ([] as IterationMatch[]),
         someString,
         (value) => value === "a" || value === "c",
-        (match, i) => (accumulator.push({
+        (acc, char, i) => (acc.push({
           index: i,
-          originalValue: match,
-          mappedValue: match + "-mapped",
+          originalValue: char,
+          mappedValue: char + "-mapped",
         } as IterationMatch)),
-        true,
       );
 
       // then
@@ -117,16 +116,16 @@ describe("The string utilities", () => {
     test("should identify matches by default", () => {
       // given
       const someString = "abca";
-      const accumulator: IterationMatch[] = [];
 
       // when
-      iterateStringReverse(
+      const accumulator = mapStringReverse(
+        () => ([] as IterationMatch[]),
         someString,
         (value) => value === "a" || value === "c",
-        (match, i) => (accumulator.push({
+        (acc, char, i) => (acc.push({
           index: i,
-          originalValue: match,
-          mappedValue: match + "-mapped",
+          originalValue: char,
+          mappedValue: char + "-mapped",
         } as IterationMatch)),
       );
 
@@ -153,18 +152,17 @@ describe("The string utilities", () => {
     test("should identify first match if we break on match", () => {
       // given
       const someString = "abca";
-      const accumulator: IterationMatch[] = [];
 
       // when
-      iterateStringReverse(
+      const accumulator = mapStringReverse(
+        () => ([] as IterationMatch[]),
         someString,
         (value) => value === "a" || value === "c",
-        (match, i) => (accumulator.push({
+        (acc, char, i) => (acc.push({
           index: i,
-          originalValue: match,
-          mappedValue: match + "-mapped",
+          originalValue: char,
+          mappedValue: char + "-mapped",
         } as IterationMatch)),
-        true,
       );
 
       // then
