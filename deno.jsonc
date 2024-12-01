@@ -1,6 +1,7 @@
 {
   "imports": {
     "@input": "./lib/input.ts",
+    "@output": "./lib/output.ts",
     "@strings": "./lib/strings.ts",
     "@arrays": "./lib/arrays.ts"
   }

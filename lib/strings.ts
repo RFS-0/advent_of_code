@@ -1,3 +1,23 @@
+export const splitByComma: (input: string) => string[] = (input) => {
+  return input.split(",");
+};
+
+export const splitBySemicolon: (input: string) => string[] = (input) => {
+  return input.split(";");
+};
+
+export const splitBySpace: (input: string) => string[] = (input) => {
+  return input.match(/\S+/g) || [];
+};
+
+export const splitByMultiWhiteSpace: (input: string) => string[] = (input) => {
+  return input.split(/\s+/);
+};
+
+export const splitByNewLine: (input: string) => string[] = (input) => {
+  return input.split("\n").filter((line) => line.length > 0);
+};
+
 export function isDigit(char: string): boolean {
   return /^[0-9]$/.test(char);
 }
