@@ -44,6 +44,12 @@ describe("The string utilities", () => {
       originalValue: string;
       mappedValue: string;
     };
+
+    type IterationMiss = {
+      index: number;
+      originalValue: string;
+      mappedValue: string;
+    };
     test("should identify matches by default", () => {
       // given
       const someString = "abca";
@@ -80,6 +86,34 @@ describe("The string utilities", () => {
       ]);
     });
 
+    test("should identify misses by default", () => {
+      // given
+      const someString = "abca";
+
+      // when
+      const accumulator = mapString(
+        () => ([] as IterationMiss[]),
+        someString,
+        (value) => value === "a" || value === "c",
+        () => {},
+        () => false,
+        (acc, char, i) => (acc.push({
+          index: i,
+          originalValue: char,
+          mappedValue: char + "-mapped",
+        } as IterationMiss)),
+      );
+
+      // then
+      assertEquals(accumulator, [
+        {
+          index: 1,
+          originalValue: "b",
+          mappedValue: "b-mapped",
+        },
+      ]);
+    });
+
     test("should identify first match if we break on match", () => {
       // given
       const someString = "abca";
@@ -94,6 +128,7 @@ describe("The string utilities", () => {
           originalValue: char,
           mappedValue: char + "-mapped",
         } as IterationMatch)),
+        () => true,
       );
 
       // then
@@ -102,6 +137,35 @@ describe("The string utilities", () => {
           index: 0,
           originalValue: "a",
           mappedValue: "a-mapped",
+        },
+      ]);
+    });
+
+    test("should identify first miss if we break on miss", () => {
+      // given
+      const someString = "abbca";
+
+      // when
+      const accumulator = mapString(
+        () => ([] as IterationMiss[]),
+        someString,
+        (value) => value === "a" || value === "c",
+        () => {},
+        () => false,
+        (acc, char, i) => (acc.push({
+          index: i,
+          originalValue: char,
+          mappedValue: char + "-mapped",
+        } as IterationMiss)),
+        () => true,
+      );
+
+      // then
+      assertEquals(accumulator, [
+        {
+          index: 1,
+          originalValue: "b",
+          mappedValue: "b-mapped",
         },
       ]);
     });
@@ -163,6 +227,7 @@ describe("The string utilities", () => {
           originalValue: char,
           mappedValue: char + "-mapped",
         } as IterationMatch)),
+        () => true,
       );
 
       // then
