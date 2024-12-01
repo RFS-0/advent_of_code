@@ -6,21 +6,28 @@ export type PotentialEnginePart = {
   colEnd: number;
   value: number;
 };
-export type Symbol = {
+export type PotentialGear = {
   row: number;
   col: number;
 };
+
+export type Gear = {
+  coordinate: string;
+  gearRatio: number;
+};
 export type EnginePart = {
+  adjacentCoordinates: Set<string>;
   value: number;
 };
+
 export type EngineSchematicInput = {
   potentialEngineParts: PotentialEnginePart[];
-  symbols: Symbol[];
+  potentialGears: PotentialGear[];
 };
 
 export const parseEngineSchematic = (input: string) => {
   const potentialEngineParts: PotentialEnginePart[] = [];
-  const symbols: Symbol[] = [];
+  const symbols: PotentialGear[] = [];
   const lines = splitByNewLine(input);
   for (let rowIndex = 0; rowIndex < lines.length; rowIndex++) {
     const row = lines[rowIndex];
@@ -83,11 +90,11 @@ export const parseEngineSchematic = (input: string) => {
 
   return {
     potentialEngineParts: potentialEngineParts,
-    symbols: symbols,
+    potentialGears: symbols,
   } as EngineSchematicInput;
 };
 
-const mapToSymbolCoordinates = (symbols: Symbol[]) => {
+const mapToGearCoordinates = (symbols: PotentialGear[]) => {
   const symbolsCoordinates: Set<string> = new Set();
   for (const symbol of symbols) {
     symbolsCoordinates.add(`${symbol.row},${symbol.col}`);
@@ -122,15 +129,16 @@ const calculateAdjacentCoordinates = (
 
 export const extractEngineParts = (input: EngineSchematicInput) => {
   const engineParts: EnginePart[] = [];
-  const symbolCoordinates = mapToSymbolCoordinates(input.symbols);
+  const gearCoordinates = mapToGearCoordinates(input.potentialGears);
   for (const potentialEnginePart of input.potentialEngineParts) {
     const adjacentCoordinates = calculateAdjacentCoordinates(
       potentialEnginePart,
     );
     for (const adjacentCoordinate of adjacentCoordinates) {
-      if (symbolCoordinates.has(adjacentCoordinate)) {
+      if (gearCoordinates.has(adjacentCoordinate)) {
         engineParts.push({
           value: potentialEnginePart.value,
+          adjacentCoordinates,
         });
         break;
       }
@@ -138,4 +146,35 @@ export const extractEngineParts = (input: EngineSchematicInput) => {
   }
 
   return engineParts;
+};
+
+const isAdjacent = (
+  enginePart: EnginePart,
+  potentialGearCoordinate: string,
+) => {
+  return enginePart.adjacentCoordinates.has(potentialGearCoordinate);
+};
+
+export const extractGears = (input: EngineSchematicInput) => {
+  const gears: Gear[] = [];
+  const engineParts = extractEngineParts(input);
+  const potentialGearCoordinates = mapToGearCoordinates(input.potentialGears);
+
+  for (const potentialGearCoordinate of potentialGearCoordinates) {
+    let numberOfAdjacentEngineParts = 0;
+    let gearRatio = 1;
+    for (const enginePart of engineParts) {
+      if (isAdjacent(enginePart, potentialGearCoordinate)) {
+        numberOfAdjacentEngineParts++;
+        gearRatio *= enginePart.value;
+      }
+    }
+    if (numberOfAdjacentEngineParts === 2) {
+      gears.push({
+        coordinate: potentialGearCoordinate,
+        gearRatio: gearRatio,
+      });
+    }
+  }
+  return gears;
 };

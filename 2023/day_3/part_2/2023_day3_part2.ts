@@ -4,7 +4,7 @@
 
 import { downloadInput, InputParser, readSessionToken } from '@input';
 import { uploadSolution } from '@output';
-import { extractEngineParts, parseEngineSchematic } from '../gear-ratios.ts';
+import { extractGears, parseEngineSchematic } from '../gear-ratios.ts';
 
 const sessionCookie = readSessionToken();
 const input = await downloadInput(
@@ -18,16 +18,16 @@ const parsed = new InputParser(input)
   .printParsed()
   .getParsed();
 
-const engineParts = extractEngineParts(parsed);
+const gears = extractGears(parsed);
 
-const sumOfEngineParts = engineParts.map((part) => part.value)
+const sumOfGearRatios = gears.map((gear) => gear.gearRatio)
   .reduce((sum, part) => sum + part, 0);
 
-console.log(`Submitting the result: ${sumOfEngineParts}`);
+console.log(`Submitting the result: ${sumOfGearRatios}`);
 
 await uploadSolution(
   "https://adventofcode.com/2023/day/3/answer",
   "2",
-  sumOfEngineParts.toString(),
+  sumOfGearRatios.toString(),
   sessionCookie,
 );

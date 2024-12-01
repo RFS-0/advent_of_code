@@ -1,8 +1,8 @@
-import { describe, test } from 'jsr:@std/testing/bdd';
-import { InputParser } from '@input';
+import { describe, test } from "jsr:@std/testing/bdd";
+import { InputParser } from "@input";
 
-import { assertEquals } from 'jsr:@std/assert';
-import { extractEngineParts, parseEngineSchematic } from "../gear-ratios.ts";
+import { assertEquals } from "jsr:@std/assert";
+import { extractGears, parseEngineSchematic } from "../gear-ratios.ts";
 
 describe("Advent of Code 2023, Day 3, Part 2", () => {
   test("should be able to solve example", () => {
@@ -23,11 +23,11 @@ describe("Advent of Code 2023, Day 3, Part 2", () => {
       .printParsed()
       .getParsed();
 
-    const engineParts = extractEngineParts(parsed);
+    const gears = extractGears(parsed);
 
-    const sumOfEngineParts = engineParts.map((part) => part.value)
+    const sumOfGearRatios = gears.map((gear) => gear.gearRatio)
       .reduce((sum, part) => sum + part, 0);
 
-    assertEquals(sumOfEngineParts, 4361);
+    assertEquals(sumOfGearRatios, 467835);
   });
 });

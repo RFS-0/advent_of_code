@@ -4,7 +4,7 @@ import { InputParser } from "@input";
 import { assertEquals } from "jsr:@std/assert";
 import { parse } from "../day2-utils.ts";
 
-describe("Advent of Code 2024, Day 2, Part 1", () => {
+describe.skip("Advent of Code 2024, Day 2, Part 1", () => {
   test("should be able to solve example", () => {
     const input = `tbd`;
 
