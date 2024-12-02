@@ -65,3 +65,46 @@ export function mapItemsReverse<A, T, O>(
   }
   return finalize(accumulator);
 }
+
+export function excludeByKey<T, K extends keyof T>(
+  items: T[],
+  itemsToExclude: T[],
+  key: K,
+): T[] {
+  const keysToExclude = new Set(itemsToExclude.map((item) => item[key]));
+  return items.filter((item) => !keysToExclude.has(item[key]));
+}
+
+export function sortIncreasingByKey<T, K extends keyof T>(items: T[], key: K) {
+  return [...items].sort((a, b) => {
+    const keyA = a[key];
+    const keyB = b[key];
+
+    if (typeof keyA === "number" && typeof keyB === "number") {
+      return keyA - keyB;
+    } else if (typeof keyA === "string" && typeof keyB === "string") {
+      return keyA.localeCompare(keyB);
+    } else {
+      throw new Error("Key must be number or string");
+    }
+  });
+}
+
+export function sortDecreasingByKey<T, K extends keyof T>(items: T[], key: K) {
+  return [...items].sort((a, b) => {
+    const keyA = a[key];
+    const keyB = b[key];
+
+    if (typeof keyA === "number" && typeof keyB === "number") {
+      return keyB - keyA; // Reverse the subtraction
+    } else if (typeof keyA === "string" && typeof keyB === "string") {
+      return keyB.localeCompare(keyA); // Reverse the localeCompare
+    } else {
+      throw new Error("Key must be number or string");
+    }
+  });
+}
+
+export function concat<T>(items: T[], otherItems: T[]) {
+  return [...items, ...otherItems];
+}

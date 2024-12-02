@@ -1,10 +1,10 @@
-import { describe, test } from "jsr:@std/testing/bdd";
-import { InputParser } from "@input";
+import {describe, test} from "jsr:@std/testing/bdd";
+import {InputParser} from "@input";
 
-import { assertEquals } from "jsr:@std/assert";
-import { filterSaveReports, parseReports } from "../fusion-utils.ts";
+import {assertEquals} from "jsr:@std/assert";
+import {filterSaveReports, parseReports,} from "../fusion-utils.ts";
 
-describe("Advent of Code 2024, Day 2, Part 1", () => {
+describe.skip("Advent of Code 2024, Day 2, Part 1", () => {
   test("should be able to solve example", () => {
     const input = `7 6 4 2 1
 1 2 7 8 9

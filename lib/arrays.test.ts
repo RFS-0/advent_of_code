@@ -1,6 +1,13 @@
 import { describe, test } from "jsr:@std/testing/bdd";
 import { assertEquals } from "jsr:@std/assert";
-import { mapItems, mapItemsReverse } from "@arrays";
+import {
+  concat,
+  excludeByKey,
+  mapItems,
+  mapItemsReverse,
+  sortDecreasingByKey,
+  sortIncreasingByKey,
+} from "@arrays";
 
 describe("The array utilities", () => {
   type Item = {
@@ -187,6 +194,106 @@ describe("The array utilities", () => {
           },
         },
       ]);
+    });
+  });
+
+  describe("when excluding items from array", () => {
+    type Item = {
+      id: number;
+      value: string;
+    };
+    test("should excluded specified items by specified key", () => {
+      // given
+      const items: Item[] = [
+        { id: 1, value: "val-1" },
+        { id: 2, value: "val-2" },
+        { id: 3, value: "val-3" },
+      ];
+      // NOTE: values differ intentionally form those above
+      const toBeExcluded = [
+        { id: 2, value: "val-1" },
+        { id: 3, value: "val-2" },
+      ];
+
+      // when
+      const withoutExcludedItems = excludeByKey(items, toBeExcluded, "id");
+
+      // then
+      assertEquals(withoutExcludedItems, [{ id: 1, value: "val-1" }]);
+    });
+  });
+
+  describe("when sorting items of array", () => {
+    type Item = {
+      id: number;
+      value: string;
+    };
+    test("can sort increasing by key", () => {
+      // given
+      const items: Item[] = [
+        { id: 3, value: "val-3" },
+        { id: 2, value: "val-2" },
+        { id: 1, value: "val-1" },
+      ];
+
+      // when
+      const sortedById = sortIncreasingByKey(items, "id");
+
+      // then
+      const expected: Item[] = [
+        { id: 1, value: "val-1" },
+        { id: 2, value: "val-2" },
+        { id: 3, value: "val-3" },
+      ];
+      assertEquals(sortedById, expected);
+    });
+
+    test("can sort decreasing by key", () => {
+      // given
+      const items: Item[] = [
+        { id: 1, value: "val-1" },
+        { id: 2, value: "val-2" },
+        { id: 3, value: "val-3" },
+      ];
+
+      // when
+      const sortedById = sortDecreasingByKey(items, "id");
+
+      // then
+      const expected: Item[] = [
+        { id: 3, value: "val-3" },
+        { id: 2, value: "val-2" },
+        { id: 1, value: "val-1" },
+      ];
+      assertEquals(sortedById, expected);
+    });
+  });
+
+  describe("when concatenating arrays", () => {
+    type Item = {
+      id: number;
+      value: string;
+    };
+    test("can concat two arrays", () => {
+      // given
+      const items: Item[] = [
+        { id: 1, value: "val-1" },
+      ];
+      const otherItems: Item[] = [
+        { id: 2, value: "val-2" },
+        { id: 3, value: "val-3" },
+      ];
+
+      // when
+      const concatenation = concat(items, otherItems);
+
+      // then
+      const expected: Item[] = [
+        { id: 1, value: "val-1" },
+        { id: 2, value: "val-2" },
+        { id: 3, value: "val-3" },
+      ];
+      assertEquals(concatenation, expected);
     });
   });
 });

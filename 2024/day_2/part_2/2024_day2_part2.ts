@@ -3,7 +3,7 @@
 // execute from root with: deno run --allow-net 2024/day_2/part_2/2024_day2_part2.ts <session_cookie>
 
 import { downloadInput, InputParser, readSessionToken } from "@input";
-import { parseReports } from "../fusion-utils.ts";
+import { filterSaveReportsWithDamping, parseReports } from "../fusion-utils.ts";
 import { uploadSolution } from "@output";
 
 const sessionCookie = readSessionToken();
@@ -13,22 +13,18 @@ const input = await downloadInput(
 );
 
 const parsed = new InputParser(input)
-  .printInput()
+  //.printInput()
   .parseLines(parseReports)
-  .printParsed()
+  //.printParsed()
   .getParsed();
 
-// process parsed
+const numberOfSaveReports = filterSaveReportsWithDamping(parsed).length;
 
-// calc result from processed
-
-const result = "tbd";
-
-console.log("Submitting the result: ", result);
+console.log("submitting the result: ", numberOfSaveReports);
 
 await uploadSolution(
   "https://adventofcode.com/2024/day/2/answer",
   "2",
-  result,
+  numberOfSaveReports.toString(),
   sessionCookie,
 );
