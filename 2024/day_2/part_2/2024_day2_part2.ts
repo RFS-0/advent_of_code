@@ -3,7 +3,7 @@
 // execute from root with: deno run --allow-net 2024/day_2/part_2/2024_day2_part2.ts <session_cookie>
 
 import { downloadInput, InputParser, readSessionToken } from "@input";
-import { parse } from "../day2-utils.ts";
+import { parseReports } from "../fusion-utils.ts";
 import { uploadSolution } from "@output";
 
 const sessionCookie = readSessionToken();
@@ -14,7 +14,7 @@ const input = await downloadInput(
 
 const parsed = new InputParser(input)
   .printInput()
-  .parseLines(parse)
+  .parseLines(parseReports)
   .printParsed()
   .getParsed();
 
