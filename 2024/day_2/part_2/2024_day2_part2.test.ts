@@ -18,7 +18,6 @@ describe("Advent of Code 2024, Day 2, Part 2", () => {
       .getParsed();
 
     const safeReports = filterSaveReportsWithDamping(parsed);
-    console.log(safeReports.map((r) => r.id));
     const numberOfSaveReports = safeReports.length;
     assertEquals(numberOfSaveReports, 4);
   });

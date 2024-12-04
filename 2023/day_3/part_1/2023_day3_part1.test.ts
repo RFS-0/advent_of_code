@@ -23,8 +23,6 @@ describe("Advent of Code 2023, Day 3, Part 1", () => {
 
     const engineParts = extractEngineParts(parsed);
 
-    console.log(engineParts);
-
     const sumOfEngineParts = engineParts.map((part) => part.value)
       .reduce((sum, part) => sum + part, 0);
 

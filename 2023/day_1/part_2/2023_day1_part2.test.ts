@@ -21,8 +21,6 @@ zoneight234
       .getParsed()
       .map(convertWithRulesForPart2);
 
-    console.log(JSON.stringify(extractedCalibrationValues, null, 2));
-
     const result = extractedCalibrationValues
       .reduce((acc, current) => acc + current, 0);
 

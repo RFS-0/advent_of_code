@@ -1,8 +1,8 @@
-import {describe, test} from "jsr:@std/testing/bdd";
-import {InputParser} from "@input";
+import { describe, test } from "jsr:@std/testing/bdd";
+import { InputParser } from "@input";
 
-import {assertEquals} from "jsr:@std/assert";
-import {filterSaveReports, parseReports,} from "../fusion-utils.ts";
+import { assertEquals } from "jsr:@std/assert";
+import { filterSaveReports, parseReports } from "../fusion-utils.ts";
 
 describe.skip("Advent of Code 2024, Day 2, Part 1", () => {
   test("should be able to solve example", () => {
@@ -18,8 +18,6 @@ describe.skip("Advent of Code 2024, Day 2, Part 1", () => {
       .getParsed();
 
     const safeReports = filterSaveReports(parsed);
-    console.log("Safe reports:");
-    console.log(safeReports);
 
     assertEquals(safeReports.length, 2);
   });
