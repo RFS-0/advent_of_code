@@ -14,9 +14,7 @@ const input = await downloadInput(
 const parser = (raw: string) =>
   raw.split("\n").filter((line) => line.length > 0);
 const calibrationValues = new InputParser(input)
-  .printInput()
   .parseLines(parser)
-  .printParsed()
   .getParsed()
   .map(convertWithRulesForPart1);
 

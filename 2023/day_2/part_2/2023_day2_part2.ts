@@ -16,9 +16,7 @@ const input = await downloadInput(
 );
 
 const parsed = new InputParser(input)
-  .printInput()
   .parseLines(parseGames)
-  .printParsed()
   .getParsed();
 
 let totalPowerOfCubeSets = 0;

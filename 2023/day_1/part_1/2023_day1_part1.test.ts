@@ -14,13 +14,9 @@ treb7uchet`;
     const inputParser = (raw: string) =>
       raw.split("\n").filter((line) => line.length > 0);
     const extractedCalibrationValues = new InputParser(input)
-      .printInput()
       .parseLines(inputParser)
-      .printParsed()
       .getParsed()
       .map(convertWithRulesForPart1);
-
-    console.log(JSON.stringify(extractedCalibrationValues, null, 2));
 
     const result = extractedCalibrationValues
       .reduce((acc, current) => acc + current, 0);

@@ -17,9 +17,7 @@ zoneight234
     const inputParser = (raw: string) =>
       raw.split("\n").filter((line) => line.length > 0);
     const extractedCalibrationValues = new InputParser(input)
-      .printInput()
       .parseLines(inputParser)
-      .printParsed()
       .getParsed()
       .map(convertWithRulesForPart2);
 

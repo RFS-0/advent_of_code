@@ -22,9 +22,7 @@ describe("Advent of Code 2024, Day 1, Part 1", () => {
     const inputParser = (raw: string) =>
       raw.split("\n").filter((line) => line.length > 0);
     const extractedLocationIdLines = new InputParser(input)
-      .printInput()
       .parseLines(inputParser)
-      .printParsed()
       .getParsed();
 
     const locationIdLists: UnsortedLocationIdLists = mapItems(

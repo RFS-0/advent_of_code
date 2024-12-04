@@ -108,3 +108,85 @@ export function sortDecreasingByKey<T, K extends keyof T>(items: T[], key: K) {
 export function concat<T>(items: T[], otherItems: T[]) {
   return [...items, ...otherItems];
 }
+
+export function createMatrix<T>(rows: number, cols: number, value: T) {
+  return Array(rows).fill(null).map(() => Array(cols).fill(value)) as T[][];
+}
+
+export function assertNDimensionalMatrix<T>(
+  matrix: any,
+  dimensions: number[],
+  dimension: number = 0,
+): void {
+  if (!Array.isArray(matrix)) {
+    throw new Error(`Dimension ${dimension} is not an array.`);
+  }
+
+  const actualLength = matrix.length;
+  const expectedLength = dimensions[dimension];
+
+  if (expectedLength !== null && actualLength !== expectedLength) {
+    throw new Error(
+      `Dimension ${dimension} expected ${expectedLength} elements, but got ${actualLength}.`,
+    );
+  }
+
+  if (dimension < dimensions.length - 1) {
+    for (const subMatrix of matrix) {
+      assertNDimensionalMatrix(subMatrix, dimensions, dimension + 1);
+    }
+  }
+}
+
+export function rows<T>(matrix: T[][]) {
+  return matrix.map((row) => row.slice());
+}
+
+export function rowsReversed<T>(matrix: T[][]) {
+  return matrix.map((row) => [...row].reverse());
+}
+
+export function columns<T>(matrix: T[][]) {
+  const cols = [];
+  const numCols = matrix[0].length;
+  for (let j = 0; j < numCols; j++) {
+    const column = [];
+    for (let i = 0; i < matrix.length; i++) {
+      column.push(matrix[i][j]);
+    }
+    cols.push(column);
+  }
+  return cols;
+}
+
+export function columnsReversed<T>(matrix: T[][]) {
+  const reversedCols = [];
+  const numCols = matrix[0].length;
+  for (let j = 0; j < numCols; j++) {
+    const column = [];
+    for (let i = matrix.length - 1; i >= 0; i--) {
+      column.push(matrix[i][j]);
+    }
+    reversedCols.push(column);
+  }
+  return reversedCols;
+}
+
+export function diagonals<T>(matrix: T[][]): T[][] {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+
+  const topLeftToBottomRight: T[] = [];
+  const topRightToBottomLeft: T[] = [];
+
+  for (let i = 0; i < rows; i++) {
+    topLeftToBottomRight.push(matrix[i][i]);
+    topRightToBottomLeft.push(matrix[i][cols - i - 1]);
+  }
+
+  return [topLeftToBottomRight, topRightToBottomLeft];
+}
+
+export function diagonalsReversed<T>(matrix: T[][]) {
+  return diagonals(matrix).map((row) => [...row].reverse());
+}

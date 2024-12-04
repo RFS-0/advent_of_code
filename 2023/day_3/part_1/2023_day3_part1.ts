@@ -13,9 +13,7 @@ const input = await downloadInput(
 );
 
 const parsed = new InputParser(input)
-  .printInput()
   .parseLines(parseEngineSchematic)
-  .printParsed()
   .getParsed();
 
 const engineParts = extractEngineParts(parsed);

@@ -1,3 +1,17 @@
+export const splitToStringMatrix = (input: string) => {
+  const stringMatrix: string[][] = [];
+  const lines = splitByNewLine(input);
+  for (const line of lines) {
+    stringMatrix.push(splitChars(line));
+  }
+
+  return stringMatrix;
+};
+
+export const splitChars: (input: string) => string[] = (input) => {
+  return input.split("");
+};
+
 export const splitByComma: (input: string) => string[] = (input) => {
   return input.split(",");
 };

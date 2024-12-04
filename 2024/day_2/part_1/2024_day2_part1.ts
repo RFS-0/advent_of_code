@@ -13,9 +13,7 @@ const input = await downloadInput(
 );
 
 const parsed = new InputParser(input)
-  .printInput()
   .parseLines(parseReports)
-  .printParsed()
   .getParsed();
 
 const safeReports = filterSaveReports(parsed);

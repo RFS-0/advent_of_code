@@ -14,9 +14,7 @@ describe.skip("Advent of Code 2024, Day 2, Part 1", () => {
 1 3 6 7 9`;
 
     const parsed = new InputParser(input)
-      .printInput()
       .parseLines(parseReports)
-      .printParsed()
       .getParsed();
 
     const safeReports = filterSaveReports(parsed);

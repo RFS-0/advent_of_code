@@ -18,9 +18,7 @@ describe("Advent of Code 2023, Day 3, Part 2", () => {
 .664.598..`;
 
     const parsed = new InputParser(input)
-      .printInput()
       .parseLines(parseEngineSchematic)
-      .printParsed()
       .getParsed();
 
     const gears = extractGears(parsed);

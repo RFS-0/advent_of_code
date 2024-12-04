@@ -13,9 +13,7 @@ const input = await downloadInput(
 );
 
 const parsed = new InputParser(input)
-  .printInput()
   .parseLines(parseGames)
-  .printParsed()
   .getParsed();
 
 const possibleGames = filterPossibleGames(parsed, {
