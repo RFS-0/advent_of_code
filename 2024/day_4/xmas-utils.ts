@@ -1,5 +1,13 @@
-import { createMatrix } from "@arrays";
-import { splitByNewLine } from "@strings";
+import {
+  columns,
+  columnsReversed,
+  createMatrix,
+  diagonals,
+  diagonalsReversed,
+  rows,
+  rowsReversed,
+} from "@arrays";
+import { splitByNewLine, splitToStringMatrix } from "@strings";
 
 export function parseXmas(input: string) {
   const lines = splitByNewLine(input);
@@ -131,3 +139,44 @@ function xmasMatch(
     remaining.substring(1),
   );
 }
+
+export const parseBlocks = (input: string, size: number) => {
+  const matrix = splitToStringMatrix(input);
+  const maxRowIndex = matrix.length - size + 1;
+  const maxColIndex = matrix.length - size + 1;
+  if (maxRowIndex < 0 || maxColIndex < 0) {
+    throw new Error(`input to small to parse a block of size ${size}`);
+  }
+  const blocks: string[][][] = [];
+  for (let i = 0; i < maxRowIndex; i++) {
+    for (let j = 0; j < maxColIndex; j++) {
+      const block: string[][] = createMatrix(size, size, "");
+      for (let k = 0; k < size; k++) {
+        for (let l = 0; l < size; l++) {
+          block[k][l] = matrix[i + k][j + l];
+        }
+      }
+      blocks.push(block);
+    }
+  }
+  return blocks;
+};
+
+export const countMas = (blocks: string[][][]) => {
+  let xmasCount = 0;
+  for (const block of blocks) {
+    const xmasInDiagonals = diagonals(block)
+      .flatMap((v) => v.join(""))
+      .map((s) => s === "MAS" ? 1 : 0 as number)
+      .reduce((sum, value) => sum + value, 0);
+    const xmasInDiagonalsReverse = diagonalsReversed(block)
+      .flatMap((v) => v.join(""))
+      .map((s) => s === "MAS" ? 1 : 0 as number)
+      .reduce((sum, value) => sum + value, 0);
+
+    if (xmasInDiagonals + xmasInDiagonalsReverse === 2) {
+      xmasCount += 1;
+    }
+  }
+  return xmasCount;
+};

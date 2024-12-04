@@ -2,8 +2,9 @@
 
 // execute from root with: deno run --allow-net 2024/day_4/part_2/2024_day4_part2.ts <session_cookie>
 
-import {downloadInput, readSessionToken} from "@input";
-import {uploadSolution} from "@output";
+import { downloadInput, InputParser, readSessionToken } from "@input";
+import { uploadSolution } from "@output";
+import { countMas, parseBlocks } from "../xmas-utils.ts";
 
 const sessionCookie = readSessionToken();
 const input = await downloadInput(
@@ -11,7 +12,12 @@ const input = await downloadInput(
   sessionCookie,
 );
 
-const result = 0;
+const parsed = new InputParser(input)
+  //.printInput()
+  .parseLines((input) => parseBlocks(input, 3))
+  .getParsed();
+
+let result = countMas(parsed);
 
 console.log("submitting the result: ", result);
 

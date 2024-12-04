@@ -1,14 +1,29 @@
-import {describe, test} from "jsr:@std/testing/bdd";
+import { describe, test } from "jsr:@std/testing/bdd";
 
-import {assertEquals} from "jsr:@std/assert";
+import { assertEquals } from "jsr:@std/assert";
+import { InputParser } from "@input";
+import { countMas, countXmas, parseBlocks, parseXmas } from "../xmas-utils.ts";
 
 describe("Advent of Code 2024, Day 4, Part 2", () => {
   test("should be able to solve example", () => {
-    const input =
-      `xmul(2,4)&mul[3,7]!^don't()_mul(5,5)+mul(32,64](mul(11,8)undo()?mul(8,5))`;
+    const input = `.M.S......
+..A..MSMS.
+.M.S.MAA..
+..A.ASMSM.
+.M.S.M....
+..........
+S.S.S.S.S.
+.A.A.A.A..
+M.M.M.M.M.
+..........`;
 
-    const result = 48;
+    const parsed = new InputParser(input)
+      //.printInput()
+      .parseLines((input) => parseBlocks(input, 3))
+      .getParsed();
 
-    assertEquals(result, 48);
+    let result = countMas(parsed);
+
+    assertEquals(result, 9);
   });
 });
