@@ -119,26 +119,10 @@ export const fixIncorrectUpdates = (incorrectUpdates: IncorrectUpdates) => {
         throw new Error("no rule to process");
       }
       if (!checkRule(fixedUpdate, currentRule)) {
-        console.log(
-          fixedUpdate.line,
-          "with ",
-          fixedUpdate.pages,
-          "violates ",
-          currentRule,
-        );
         fixedUpdate = fixRule(fixedUpdate, currentRule);
         relevantRules = [...allRelevantRules];
-        console.log("after violation fixed: ", fixedUpdate);
-      } else {
-        console.log("rule ", currentRule, " is not violated");
       }
     }
-    console.log(
-      "incorrect update",
-      incorrectUpdate,
-      " was fixed and is now ",
-      fixedUpdate,
-    );
     fixedUpdates.push(fixedUpdate);
   }
   return fixedUpdates;

@@ -96,9 +96,9 @@ export function sortDecreasingByKey<T, K extends keyof T>(items: T[], key: K) {
     const keyB = b[key];
 
     if (typeof keyA === "number" && typeof keyB === "number") {
-      return keyB - keyA; // Reverse the subtraction
+      return keyB - keyA;
     } else if (typeof keyA === "string" && typeof keyB === "string") {
-      return keyB.localeCompare(keyA); // Reverse the localeCompare
+      return keyB.localeCompare(keyA);
     } else {
       throw new Error("Key must be number or string");
     }

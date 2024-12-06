@@ -27,7 +27,6 @@ export const parseInput = (input: string) => {
       }
     }
   }
-  console.log("lab", lab);
   return lab;
 };
 
@@ -50,7 +49,6 @@ const canMoveForward = (lab: Lab) => {
 const moveGuard = (lab: Lab) => {
   if (nextIsOutside(lab)) {
     lab.matrix[lab.guardPosRow][lab.guardPosCol] = "X";
-    console.log("next move would be outside, terminating");
     return false;
   }
   if (canMoveForward(lab)) {
@@ -72,7 +70,6 @@ const moveGuard = (lab: Lab) => {
 const moveGuard2 = (lab: Lab) => {
   if (nextIsOutside(lab)) {
     lab.matrix[lab.guardPosRow][lab.guardPosCol] = "X";
-    console.log("next move would be outside, terminating");
     return false;
   }
   if (canMoveForward(lab)) {
@@ -186,7 +183,6 @@ export const determineValidObstacles = (
     }
 
     if (inLoop) {
-      console.log("found loop: ");
       printMatrix(originalLabCopy.matrix);
       validObstacles.push(candidate);
     }

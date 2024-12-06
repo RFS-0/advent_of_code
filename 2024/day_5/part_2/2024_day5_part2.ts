@@ -38,10 +38,7 @@ for (const correctUpdate of fixedUpdates) {
   total += middlePageNumber;
 }
 
-console.log('submitting: ', total)
-
-// 6479 too high
-// 6311
+console.log("submitting: ", total);
 
 await uploadSolution(
   "https://adventofcode.com/2024/day/5/answer",

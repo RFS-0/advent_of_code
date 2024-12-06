@@ -18,9 +18,7 @@ const parsed = new InputParser(input)
   //.printParsed()
   .getParsed();
 
-console.log(parsed);
-
-let result = countXmas(parsed);
+const result = countXmas(parsed);
 
 await uploadSolution(
   "https://adventofcode.com/2024/day/4/answer",

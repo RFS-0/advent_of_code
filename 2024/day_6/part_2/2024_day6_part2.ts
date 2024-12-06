@@ -25,7 +25,6 @@ const parsed = new InputParser(input)
 const parsedCopy = JSON.parse(JSON.stringify(parsed));
 
 const labWithOriginalRoute = originalGuardRoute(parsed);
-const count = countVisitedCells(labWithOriginalRoute);
 const obstacleCandidates = extractObstacleCandidates(labWithOriginalRoute);
 const validObstacleCount = determineValidObstacles(
     JSON.parse(JSON.stringify(parsedCopy)),

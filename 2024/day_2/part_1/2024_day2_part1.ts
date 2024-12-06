@@ -17,8 +17,6 @@ const parsed = new InputParser(input)
   .getParsed();
 
 const safeReports = filterSaveReports(parsed);
-console.log("Safe reports:");
-console.log(safeReports);
 
 console.log("Submitting the result: ", safeReports.length);
 

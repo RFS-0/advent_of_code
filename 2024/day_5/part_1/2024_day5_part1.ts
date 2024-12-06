@@ -17,30 +17,17 @@ const input = await downloadInput(
 );
 
 const parsed = new InputParser(input)
-  //.printInput()
   .parseLines(parseInput)
   .getParsed();
 
 const correctUpdates = filterCorrectUpdates(parsed);
-console.log(
-  "correct updates",
-  JSON.stringify(
-    [
-      ...correctUpdates.map((u) =>
-        `line: ${u.line}; number of pages: ${u.pages.length}; pages: ${u.pages}`
-      ),
-    ],
-    null,
-    2,
-  ),
-);
 let total = 0;
 for (const correctUpdate of correctUpdates) {
   const middlePageNumber = mapToMiddlePageNumber(correctUpdate);
   total += middlePageNumber;
 }
 
-console.log('submitting result: ', total)
+console.log("submitting result: ", total);
 
 await uploadSolution(
   "https://adventofcode.com/2024/day/5/answer",
