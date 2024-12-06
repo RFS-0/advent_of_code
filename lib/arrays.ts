@@ -190,3 +190,10 @@ export function diagonals<T>(matrix: T[][]): T[][] {
 export function diagonalsReversed<T>(matrix: T[][]) {
   return diagonals(matrix).map((row) => [...row].reverse());
 }
+
+export const printMatrix = (matrix: string[][]): void => {
+  const v = matrix.flatMap((row) => row.join(""))
+    .reduce((out, row) => out + row + "\n", "");
+
+  console.log(v);
+};
