@@ -13,7 +13,7 @@ export const splitChars: (input: string) => string[] = (input) => {
 };
 
 export const splitByComma: (input: string) => string[] = (input) => {
-  return input.split(",");
+  return input.split(",").filter((s) => s.length > 0);
 };
 
 export const splitBySemicolon: (input: string) => string[] = (input) => {
@@ -29,7 +29,7 @@ export const splitByMultiWhiteSpace: (input: string) => string[] = (input) => {
 };
 
 export const splitByNewLine: (input: string) => string[] = (input) => {
-  return input.split("\n").filter((line) => line.length > 0);
+  return input.split("\n");
 };
 
 export function isDigit(char: string): boolean {
