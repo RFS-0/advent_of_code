@@ -1,6 +1,7 @@
-import { describe, test } from 'jsr:@std/testing/bdd';
-import { InputParser } from '@input';
-import { assertEquals, assertThrows } from 'jsr:@std/assert';
+import { describe, test } from "jsr:@std/testing/bdd";
+import { InputParser, parseMatrix } from "@input";
+import { assertEquals, assertThrows } from "jsr:@std/assert";
+import { mapMatrixToString } from "@arrays";
 
 describe("The input parser", () => {
   describe("when nothing has been parsed yet", () => {
@@ -136,6 +137,52 @@ describe("The input parser", () => {
         original: "Some input",
         mapped: "Some input mapped",
       });
+    });
+  });
+
+  describe("when parsing the input to matrix", () => {
+    test("should be able to convert to string matrix by default", () => {
+      // given
+      const raw = `....#.....
+.........#
+..........
+..#.......
+.......#..
+..........
+.#..^.....
+........#.
+#.........
+......#...`;
+      const parser = new InputParser(raw);
+
+      // when
+      const parsed = parser.parseLines(parseMatrix).getParsed();
+      const parsedAsString = mapMatrixToString(parsed);
+
+      // then
+      assertEquals(parsedAsString, raw);
+    });
+  });
+
+  describe("when parsing the input to matrix", () => {
+    test("should be able to convert to matrix of target type if specified", () => {
+      // given
+      const raw = `1234
+4321`;
+      const parser = new InputParser(raw);
+
+      // when
+      const parseToIntMatrix = (input: string) =>
+        parseMatrix(input, -1, (char) => parseInt(char));
+      const parsed = parser.parseLines(parseToIntMatrix).getParsed();
+      const parsedAsString = mapMatrixToString(parsed);
+
+      // then
+      assertEquals(parsed, [
+        [1, 2, 3, 4],
+        [4, 3, 2, 1],
+      ]);
+      assertEquals(parsedAsString, raw);
     });
   });
 });

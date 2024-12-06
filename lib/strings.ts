@@ -12,6 +12,13 @@ export const splitChars: (input: string) => string[] = (input) => {
   return input.split("");
 };
 
+export const splitBy: (input: string, separator: string) => string[] = (
+  input,
+  separator,
+) => {
+  return input.split(separator).filter((s) => s.length > 0);
+};
+
 export const splitByComma: (input: string) => string[] = (input) => {
   return input.split(",").filter((s) => s.length > 0);
 };

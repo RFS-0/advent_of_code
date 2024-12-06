@@ -13,6 +13,6 @@ describe("Advent of Code 2024, Day 7, Part 1", () => {
 
     const result = solve(parsed);
 
-    assertEquals(result, 41);
+    assertEquals(result, 0);
   });
 });
