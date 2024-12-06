@@ -15,6 +15,8 @@ export type Input = {
   updates: Update[];
 };
 
+export type IncorrectUpdates = Input;
+
 export const parseInput = (input: string) => {
   const lines = splitByNewLine(input);
 
@@ -60,6 +62,18 @@ const checkRule = (update: Update, rule: PageOrderingRule) => {
     (indexOfBefore < indexOfAfter);
 };
 
+const fixRule = (update: Update, rule: PageOrderingRule) => {
+  const beforeIndex = update.pages.findIndex((page) =>
+    page === rule.mustAppearBefore
+  );
+  const afterIndex = update.pages.findIndex((page) =>
+    page === rule.mustAppearAfter
+  );
+  update.pages.splice(beforeIndex, 1);
+  update.pages.splice(afterIndex, 0, rule.mustAppearBefore);
+  return update;
+};
+
 export const filterCorrectUpdates = (parsed: Input) => {
   const correctUpdates: Update[] = [];
   for (const update of parsed.updates) {
@@ -75,6 +89,59 @@ export const filterCorrectUpdates = (parsed: Input) => {
     }
   }
   return correctUpdates;
+};
+
+const filterRelevantRules = (update: Update, allRules: PageOrderingRule[]) => {
+  const allRelevantRules: PageOrderingRule[] = [];
+  for (let rule of allRules) {
+    if (
+      update.pages.includes(rule.mustAppearBefore) &&
+      update.pages.includes(rule.mustAppearAfter)
+    ) {
+      allRelevantRules.push(rule);
+    }
+  }
+  return allRelevantRules;
+};
+
+export const fixIncorrectUpdates = (incorrectUpdates: IncorrectUpdates) => {
+  const fixedUpdates: Update[] = [];
+  for (const incorrectUpdate of incorrectUpdates.updates) {
+    let fixedUpdate = { ...incorrectUpdate };
+    const allRelevantRules = filterRelevantRules(
+      incorrectUpdate,
+      incorrectUpdates.pageOrderingRules,
+    );
+    let relevantRules = [...allRelevantRules];
+    while (relevantRules.length > 0) {
+      const [currentRule] = relevantRules.splice(0, 1);
+      if (!currentRule) {
+        throw new Error("no rule to process");
+      }
+      if (!checkRule(fixedUpdate, currentRule)) {
+        console.log(
+          fixedUpdate.line,
+          "with ",
+          fixedUpdate.pages,
+          "violates ",
+          currentRule,
+        );
+        fixedUpdate = fixRule(fixedUpdate, currentRule);
+        relevantRules = [...allRelevantRules];
+        console.log("after violation fixed: ", fixedUpdate);
+      } else {
+        console.log("rule ", currentRule, " is not violated");
+      }
+    }
+    console.log(
+      "incorrect update",
+      incorrectUpdate,
+      " was fixed and is now ",
+      fixedUpdate,
+    );
+    fixedUpdates.push(fixedUpdate);
+  }
+  return fixedUpdates;
 };
 
 export const mapToMiddlePageNumber = (update: Update) => {

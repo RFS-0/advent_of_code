@@ -4,7 +4,12 @@
 
 import { downloadInput, InputParser, readSessionToken } from "@input";
 import { uploadSolution } from "@output";
-import { parseInput } from "../safety-manual-utils.ts";
+import {
+  filterCorrectUpdates,
+  fixIncorrectUpdates,
+  mapToMiddlePageNumber,
+  parseInput,
+} from "../safety-manual-utils.ts";
 
 const sessionCookie = readSessionToken();
 const input = await downloadInput(
@@ -17,13 +22,30 @@ const parsed = new InputParser(input)
   .parseLines(parseInput)
   .getParsed();
 
-let result = 0;
+const correctUpdates = filterCorrectUpdates(parsed);
+const idsOfCorrectUpdates = new Set(correctUpdates.map((u) => u.line));
+const incorrectUpdates = parsed.updates.filter((update) =>
+  !idsOfCorrectUpdates.has(update.line)
+);
+const fixedUpdates = fixIncorrectUpdates({
+  pageOrderingRules: parsed.pageOrderingRules,
+  updates: incorrectUpdates,
+});
 
-console.log("submitting the result: ", result);
+let total = 0;
+for (const correctUpdate of fixedUpdates) {
+  const middlePageNumber = mapToMiddlePageNumber(correctUpdate);
+  total += middlePageNumber;
+}
+
+console.log('submitting: ', total)
+
+// 6479 too high
+// 6311
 
 await uploadSolution(
   "https://adventofcode.com/2024/day/5/answer",
   "2",
-  result.toString(),
+  total.toString(),
   sessionCookie,
 );
