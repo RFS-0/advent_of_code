@@ -4,7 +4,7 @@
 
 import { downloadInput, InputParser, readSessionToken } from "@input";
 import { uploadSolution } from "@output";
-import { solve } from "../day7-utils.ts";
+import { filterPossibleEquations, parseEquations } from "../bridge-utils.ts";
 
 const sessionCookie = readSessionToken();
 const input = await downloadInput(
@@ -13,14 +13,19 @@ const input = await downloadInput(
 );
 
 const parsed = new InputParser(input)
-  .parseLines((s) => s)
+  .parseLines(parseEquations)
+  .printParsed()
   .getParsed();
 
-const result = solve(parsed);
+const sumOfPossibleResults = filterPossibleEquations(parsed)
+  .map((possible) => possible.result)
+  .reduce((sum, possible) => sum + possible, 0);
+
+console.log("Submitting: ", sumOfPossibleResults);
 
 await uploadSolution(
   "https://adventofcode.com/2024/day/7/answer",
   "1",
-  result.toString(),
+  sumOfPossibleResults.toString(),
   sessionCookie,
 );
